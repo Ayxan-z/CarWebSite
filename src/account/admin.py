@@ -6,7 +6,6 @@ from account.models import User
 class UserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('name', 'email', 'password')}),
-        (('Personal info'), {'fields': ('first_name', 'last_name')}),
         (('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
@@ -18,9 +17,9 @@ class UserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ('name', 'email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('name', 'email', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
-    search_fields = ('email', 'first_name', 'last_name')
+    search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
 
