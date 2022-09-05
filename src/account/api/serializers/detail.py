@@ -1,8 +1,9 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from account.models import User
 
 
-class AccountDetailSerializer(serializers.ModelSerializer):
+class AccountDetailSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'name')
+        fields = ('name', 'email')
+        extra_kwargs = {'name': {'required': 0}, 'email': {'required': 0}}
