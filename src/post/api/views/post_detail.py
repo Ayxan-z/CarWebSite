@@ -1,17 +1,19 @@
 from rest_framework.generics import RetrieveAPIView
 from post.models import PostModel
 from post.api.serializers import PostDetailSerializer
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 
 
-class PostDetailView(RetrieveAPIView):
-    queryset = PostModel.objects.all()
-    serializer_class = PostDetailSerializer
-    lookup_field = 'pk'
-
+class PostDetailView(APIView):
     def get(self, request, *args, **kwargs):
-        obj = PostModel.objects.filter(id=kwargs['pk'])
+        obj = PostModel.objects.filter(id=self.kwargs['pk'])
         if obj.exists():
             try:
                 obj.update(views=obj[0].views+1)
             except: pass
-        return super().get(request, *args, **kwargs)
+
+        return Response(
+            PostDetailSerializer(obj, many=True, context={'request': request}).data
+        )
