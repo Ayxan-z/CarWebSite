@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from post.models import PostModel
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class PostDetailSerializer(serializers.ModelSerializer):
@@ -78,5 +78,9 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     creation_date = serializers.SerializerMethodField(method_name='get_creation_date')
     def get_creation_date(self, obj):
-        hour = obj.creation_date.hour + 4
-        return f"{datetime.strftime(obj.creation_date, '%d.%m.%Y')} {hour if hour < 24 else hour-24}:{obj.creation_date.minute}"
+        obj.creation_date += timedelta(hours=4)
+        minute = obj.creation_date.minute
+        minute = f'0{minute}' if minute < 10 else minute
+        hour = obj.creation_date.hour
+        hour = f'0{hour}' if hour < 10 else hour
+        return f"{datetime.strftime(obj.creation_date, '%d.%m.%Y')} {hour}:{minute}"
