@@ -19,6 +19,7 @@ REST_FRAMEWORK = {
 
     "DEFAULT_THROTTLE_RATES": {
         'registerthrottle': '3000/hour',
+        'detailviewthrottle': '3/day'
     }
 }
 
