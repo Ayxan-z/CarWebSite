@@ -46,6 +46,9 @@ class PostDetailSerializer(serializers.ModelSerializer):
     color = serializers.SerializerMethodField(method_name='get_color_name')
     get_color_name = lambda self, obj: obj.color.name if obj.color else None
 
+    price = serializers.SerializerMethodField(method_name='get_price')
+    get_price = lambda self, obj: '{:,}'.format(obj.price).replace(',', ' ')
+
     price_type = serializers.SerializerMethodField(method_name='get_price_type_name')
     get_price_type_name = lambda self, obj: obj.price_type.name if obj.price_type else None
 
