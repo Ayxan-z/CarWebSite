@@ -28,7 +28,7 @@ class PostModel(models.Model):
     engine_volume = models.ForeignKey(EngineVolumeModel, on_delete=models.SET_NULL, null=True)
     engine_power = models.PositiveIntegerField('Engine Power', validators=(MaxValueValidator(10000),))
     market = models.ForeignKey(MarketModel, on_delete=models.SET_NULL, null=True, blank=True)
-    description = models.TextField('Description', max_length=700, null=True, blank=True)
+    description = models.TextField('Description', max_length=3169, null=True, blank=True)
     city = models.ForeignKey(CityModel, on_delete=models.SET_NULL, null=True)
     extra_boolean_fields = models.ManyToManyField(ExtraBooleanFieldsModel, blank=True)
     creation_date = models.DateTimeField(auto_now=True)
