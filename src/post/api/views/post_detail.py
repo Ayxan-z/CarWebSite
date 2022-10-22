@@ -22,7 +22,7 @@ class PostDetailView(APIView):
             kwargs['obj'] = obj
             view = PostViewView.as_view()
             view(request=self.request._request, *args, **kwargs)
-
+        print(request.COOKIES)
         return Response(
             PostDetailSerializer(obj, many=True, context={'request': request}).data
         )
