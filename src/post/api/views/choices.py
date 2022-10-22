@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from post.api.serializers.choices import *
+from rest_framework import status
 
 
 class ChoicesAutoModelsView(ListAPIView):
@@ -8,7 +9,10 @@ class ChoicesAutoModelsView(ListAPIView):
 
     def get_queryset(self):
         if q_brand := self.request.GET.get('brand'):
-            return BrandModel.objects.get(id=q_brand).auto_models.all()
+            try:
+                return BrandModel.objects.get(id=q_brand).auto_models.all()
+            except:
+                return Response('Not Found', status=status.HTTP_404_NOT_FOUND)
 
 
 class ChoicesListView(ListAPIView):
